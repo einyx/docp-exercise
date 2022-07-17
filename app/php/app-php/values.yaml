@@ -1,0 +1,56 @@
+replicaCount: 1
+
+image:
+  repository: einyx/app-php
+  tag: latest
+  pullPolicy: Always
+
+serviceAccount:
+  create: true
+
+podSecurityContext:
+  fsGroup: 33
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+environment: prod 
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: a0bd067047aba4971a382e478b7fcac9-64e20ebb8b7c1e26.elb.eu-north-1.amazonaws.com
+      paths: 
+          path: "/api/v1"
+          pathType: Prefix
+          backend:
+            service: 
+              name: app-php
+            port:
+              number: 80
+
+hpa:
+  enabled: true
+  maxReplicas: 2
+  cpu: 75
+  memory: 100Mi
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

@@ -115,11 +115,11 @@ inputs = {
       name            = "self-mng"
       use_name_prefix = false
 
-      subnet_ids = dependency.vpc.outputs.private_subnets
+      subnet_ids = dependency.vpc.outputs.public_subnets
 
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+      min_size     = 2
+      max_size     = 3
+      desired_size = 2
       key_name = "eks-app"
       ami_id               = "ami-05f51b54cf23c7116"
       bootstrap_extra_args = "--kubelet-extra-args '--max-pods=110'"
