@@ -18,7 +18,7 @@ generate "providers" {
 terraform {
   required_version = ">= 0.13"
   required_providers {
-    helm       = "2.4.0"
+    helm       = "2.4.1"
     kubernetes = "~> 2.0, != 2.12"
   }
 }
